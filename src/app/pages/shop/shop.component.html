@@ -1,13 +1,13 @@
 <div class=" container jumbotron">
-<div class="row">
+  <div class="row">
     <div class="col-md-4">
-        <app-date-picker (newItemEvent)="setPriceByDiscountPeriod($event)"></app-date-picker>       
+      <app-date-picker (newItemEvent)="setPriceByDiscountPeriod($event)"></app-date-picker>
     </div>
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        <app-discont-period-table></app-discont-period-table>        
+      <app-discont-period-table></app-discont-period-table>
     </div>
-</div>
+  </div>
 
   <div *ngIf="productArray == null" class="d-flex justify-content-center text-secondary">
     <div class="spinner-border" role="status">
@@ -15,10 +15,10 @@
     </div>
   </div>
 
-  <div> <!--keresés form-->
+  <div>
+    <!--keresés form-->
     <p *ngIf="productArray">{{shopLanguage.search}} : <input type="text" class="form-control"
-                                                             placeholder="{{shopLanguage.productSearch}} "
-                                                             [(ngModel)]="searchTerm"/></p>
+        placeholder="{{shopLanguage.productSearch}} " [(ngModel)]="searchTerm" /> </p>
     <!-- gasztro checkbox-->
     <div *ngIf="productArray" class="form-check form-check-inline">
       <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" [(ngModel)]="isGasztro">
@@ -29,16 +29,14 @@
       <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" [(ngModel)]="isRetail">
       <label class="form-check-label" for="inlineCheckbox2">Retail</label>
     </div>
-
     <!-- projekt checkbox -->
     <div *ngIf="productArray" class="form-check form-check-inline"> <!-- *ngIf="productArray" kell majd class elé-->
       <input class="form-check-input" type="checkbox" id="isProjektCheckbox" value="option2" [(ngModel)]="isProjekt">
       <label class="form-check-label" for="isProjektCheckbox">Projekt</label>
     </div>
-
-
   </div>
-  <br/>
+
+  <br />
   <div class="  row row-cols-1 row-cols-md-3">
     <div *ngFor="let product of filteredProductArray | slice:startIndex:lastIndex; let i = index " class="col mb-4">
       <div (click)="getIndex(i)">
@@ -51,13 +49,13 @@
               <p style="color: #bbbfbc; font-size: small; margin-bottom: -0.5px;"><i class="fas fa-box-open"></i>
                 {{shopLanguage.packagingUnit}} : {{product.u_csomagolasi_egyseg}} {{product.unitDisply}}</p>
               <p *ngIf="product.gasztro === 'N'" style="color: #bbbfbc; font-size: small; margin-bottom: -0.5px;"><i
-                class="fas fa-boxes"></i>
+                  class="fas fa-boxes"></i>
                 {{shopLanguage.karton}} : {{product.karton}} {{shopLanguage.packages}}</p>
               <p *ngIf="product.gasztro === 'Y' && product.sWeight1 === 1000"
-                 style="color: #bbbfbc; font-size: small; margin-bottom: -0.5px;"><i class="fas fa-boxes"></i>
+                style="color: #bbbfbc; font-size: small; margin-bottom: -0.5px;"><i class="fas fa-boxes"></i>
                 {{shopLanguage.karton}} : {{product.karton}} kg</p>
               <p *ngIf="product.gasztro === 'Y' && (product.sWeight1 > 1000 || product.sWeight1 < 1000)"
-                 style="color: #bbbfbc; font-size: small; margin-bottom: -0.5px;"><i class="fas fa-boxes"></i>
+                style="color: #bbbfbc; font-size: small; margin-bottom: -0.5px;"><i class="fas fa-boxes"></i>
                 {{shopLanguage.karton}} : {{product.karton}} {{shopLanguage.packages}}</p>
               <p style="color: #bbbfbc; font-size: small; margin-bottom: -0.5px;"><i class="fas fa-pallet"></i>
                 {{shopLanguage.pallet}} : {{product.u_raklapon}} {{shopLanguage.cartons}}</p>
@@ -68,16 +66,40 @@
                 {{shopLanguage.netPrice}}</p>
 
               {{shopLanguage.price}} :
+              <span
+                *ngIf="inputQuantity >= product.quantityToGetDiscount && priceByDiscountPeriod && product.gasztro === 'N'"
+                class="badge badge-warning badge-pill">{{product.quantityDiscountPrice}}
+                {{user.currency}} / {{shopLanguage.package}} </span>
+              <span
+                *ngIf="priceByDiscountPeriod && inputQuantity < product.quantityToGetDiscount && product.gasztro === 'N'"
+                class="badge badge-success badge-pill">{{product.discountPrice}}
+                {{user.currency}} / {{shopLanguage.package}} </span>
               <span *ngIf="product.gasztro === 'N'" class="badge badge-primary badge-pill">{{product.price}}
                 {{user.currency}} / {{shopLanguage.package}} </span>
 
+              <span
+                *ngIf="inputQuantity >= product.quantityToGetDiscount && priceByDiscountPeriod && product.gasztro === 'N'"
+                class="badge badge-warning badge-pill">{{product.quantityDiscountPrice}}
+                {{user.currency}} / kg </span>
+              <span
+                *ngIf="priceByDiscountPeriod && inputQuantity < product.quantityToGetDiscount && product.gasztro === 'Y' && product.sWeight1 === 1000"
+                class="badge badge-success badge-pill">{{product.discountPrice}}
+                {{user.currency}} / kg </span>
               <span *ngIf="product.gasztro === 'Y' && product.sWeight1 === 1000"
-                    class="badge badge-primary badge-pill">{{product.price}}
+                class="badge badge-primary badge-pill">{{product.price}}
                 {{user.currency}} / kg </span>
 
+              <span
+                *ngIf="inputQuantity >= product.quantityToGetDiscount && priceByDiscountPeriod && product.gasztro === 'N'"
+                class="badge badge-warning badge-pill">{{product.quantityDiscountPrice}}
+                {{user.currency}} / {{shopLanguage.package}} </span>
+              <span
+                *ngIf="priceByDiscountPeriod && inputQuantity < product.quantityToGetDiscount && product.gasztro === 'Y' && (product.sWeight1 > 1000 || product.sWeight1 < 1000) "
+                class="badge badge-success badge-pill">{{product.discountPrice}}
+                                        {{user.currency}} / {{shopLanguage.package}} </span>
               <span *ngIf="product.gasztro === 'Y' && (product.sWeight1 > 1000 || product.sWeight1 < 1000) "
-                    class="badge badge-primary badge-pill">{{product.price}}
-                {{user.currency}} / {{shopLanguage.package}}  </span>
+                class="badge badge-primary badge-pill">{{product.price}}
+                {{user.currency}} / {{shopLanguage.package}} </span>
             </div>
 
             <div class="card-footer form-row">
@@ -86,63 +108,61 @@
                 <div class="form-row">
                   <div class="col-4">
                     <input (input)="inputQuantity=$event.target.value" style="font-size: small;"
-                           onkeydown="return event.keyCode !== 69" class="form-control " min=1
-                           type="number" id="orderQuantity" formControlName="orderQuantity"
-                           name="orderQuantity" class="form-control"/>
+                      onkeydown="return event.keyCode !== 69" class="form-control " min=1 type="number"
+                      id="orderQuantity" formControlName="orderQuantity" name="orderQuantity" class="form-control" />
                   </div>
                   <p style="color: #bbbfbc; font-size: 15px;  margin-top: 5px; margin-bottom: -4px;">
                     #</p>
 
                   <div *ngIf="activeCardIndex === i" class="col">
                     <input class="form-control " id="pallet" name="pallet" style="font-size: small;"
-                           placeholder="{{inputQuantity * product.karton * product.price | number}} {{user.currency}}"
-                           class="form-control" disabled/>
+                      placeholder="{{inputQuantity * product.karton * product.price | number}} {{user.currency}}"
+                      class="form-control" disabled />
 
                   </div>
 
                   <div *ngIf="activeCardIndex !== i" class="col">
                     <input class="form-control " id="pallet" name="pallet" style="font-size: small;"
-                           placeholder="{{1 * product.karton * product.price | number}} {{user.currency}}"
-                           class="form-control" disabled/>
+                      placeholder="{{1 * product.karton * product.price | number}} {{user.currency}}"
+                      class="form-control" disabled />
 
                   </div>
                   <button type="button" data-toggle="modal" data-target="#countMode" class="btn btn-info float-right"
-                          style="font-size: small;"
-                          (click)="addToCart(product)"><i class="fas fa-shopping-cart"></i>
+                    style="font-size: small;" (click)="addToCart(product)"><i class="fas fa-shopping-cart"></i>
                   </button>
                 </div>
                 <div class="form-row" style="margin-top: 4px; margin-left: 2px;">
                   <div *ngIf="activeCardIndex !== i" class="col">
                     <input *ngIf="product.gasztro === 'N'" class="form-control " id="pallet" name="pallet"
-                           style="font-size: small;"
-                           placeholder="1# * {{product.karton}} {{shopLanguage.packages}} = {{product.karton * 1}} {{shopLanguage.packages}}"
-                           class="form-control" disabled/>
+                      style="font-size: small;"
+                      placeholder="1# * {{product.karton}} {{shopLanguage.packages}} = {{product.karton * 1}} {{shopLanguage.packages}}"
+                      class="form-control" disabled />
 
                     <input *ngIf="product.gasztro === 'Y' && product.sWeight1 === 1000" class="form-control "
-                           id="pallet" name="pallet" style="font-size: small;"
-                           placeholder="1# * {{product.karton}} kg = {{product.karton * 1}} kg"
-                           class="form-control" disabled/>
+                      id="pallet" name="pallet" style="font-size: small;"
+                      placeholder="1# * {{product.karton}} kg = {{product.karton * 1}} kg" class="form-control"
+                      disabled />
 
                     <input *ngIf="product.gasztro === 'Y' && (product.sWeight1 > 1000 || product.sWeight1 < 1000) "
-                           class="form-control " id="pallet" name="pallet" style="font-size: small;"
-                           placeholder="1# * {{product.karton}} {{shopLanguage.packages}} = {{product.karton * 1}} {{shopLanguage.packages}}"
-                           class="form-control" disabled/>
+                      class="form-control " id="pallet" name="pallet" style="font-size: small;"
+                      placeholder="1# * {{product.karton}} {{shopLanguage.packages}} = {{product.karton * 1}} {{shopLanguage.packages}}"
+                      class="form-control" disabled />
                   </div>
                   <div *ngIf="activeCardIndex === i" class="col">
                     <input *ngIf="product.gasztro === 'N'" class="form-control " id="pallet" name="pallet"
-                           style="font-size: small;"
-                           placeholder="{{inputQuantity}}# * {{product.karton}} {{shopLanguage.packages}} = {{product.karton * inputQuantity}} {{shopLanguage.packages}}"
-                           class="form-control" disabled/>
+                      style="font-size: small;"
+                      placeholder="{{inputQuantity}}# * {{product.karton}} {{shopLanguage.packages}} = {{product.karton * inputQuantity}} {{shopLanguage.packages}}"
+                      class="form-control" disabled />
 
                     <input *ngIf="product.gasztro === 'Y' && product.sWeight1 === 1000" class="form-control "
-                           id="pallet" name="pallet" style="font-size: small;"
-                           placeholder="{{inputQuantity}}# * {{product.karton}} kg = {{product.karton * inputQuantity}} kg"
-                           class="form-control" disabled/>
+                      id="pallet" name="pallet" style="font-size: small;"
+                      placeholder="{{inputQuantity}}# * {{product.karton}} kg = {{product.karton * inputQuantity}} kg"
+                      class="form-control" disabled />
 
                     <input *ngIf="product.gasztro === 'Y' && (product.sWeight1 > 1000 || product.sWeight1 < 1000) "
-                           class="form-control " id="pallet" name="pallet" style="font-size: small;"
-                           placeholder="{{inputQuantity}}# * {{product.karton}} {{shopLanguage.packages}} = {{product.karton * inputQuantity}} {{shopLanguage.packages}}"
-                           class="form-control" disabled/>
+                      class="form-control " id="pallet" name="pallet" style="font-size: small;"
+                      placeholder="{{inputQuantity}}# * {{product.karton}} {{shopLanguage.packages}} = {{product.karton * inputQuantity}} {{shopLanguage.packages}}"
+                      class="form-control" disabled />
                   </div>
 
                 </div>
@@ -165,7 +185,7 @@
         <a class="page-link" (click)="previous()" tabindex="-1">{{shopLanguage.previous}}</a>
       </li>
       <li *ngFor="let button of buttons; let i = index" [ngClass]="{'page-item active' : i == prevButtonIndex}"
-          class="page-item cursor-pointer"><a class="page-link" (click)="updateIndex(i)">{{button}}</a></li>
+        class="page-item cursor-pointer"><a class="page-link" (click)="updateIndex(i)">{{button}}</a></li>
       <li class="page-item">
         <a class="page-link" (click)="next()">{{shopLanguage.next}}</a>
       </li>
@@ -177,8 +197,7 @@
 </div>
 
 <div *ngIf="isWrongQuantity" class="modal fade" id="countMode" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -192,7 +211,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal"
-                (click)="changeQuantityStatus()">{{shopLanguage.close}}
+          (click)="changeQuantityStatus()">{{shopLanguage.close}}
         </button>
       </div>
     </div>

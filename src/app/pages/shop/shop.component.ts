@@ -110,7 +110,14 @@ export class ShopComponent implements OnInit {
         this.filteredProductArray = this.filteredForVevokod;
         //console.log(this.filteredProductArray);
         //this.filteredProductArray = this.productArray
-        this.resizingPegination();
+        this.filteredProductArray.forEach(product => {
+          product.discountPrice = product.price*0.9
+          product.quantityToGetDiscount = 100
+          this.priceByDiscountPeriod ? (product.quantityDiscountPrice = product.price*0.8) : (product.quantityDiscountPrice = product.price*0.9)
+        });
+        console.log(this.filteredProductArray);
+        //this.filteredProductArray = this.productArray
+        this.resizingPegination()
       }
     );
 

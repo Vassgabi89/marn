@@ -15,10 +15,12 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class ShopComponent implements OnInit {
 
-  shopLanguage: { search: string, productSearch: string, packagingUnit: string, minOrderQuantity: string,
-                    price: string, next: string, previous: string, karton: string, packages: string, pallet: string ,
-                    package : string, netPrice : string, cartons : string, close : string, wrongQuantity: string, 
-                    wrongQntDesc: string }
+  shopLanguage: {
+    search: string, productSearch: string, packagingUnit: string, minOrderQuantity: string,
+    price: string, next: string, previous: string, karton: string, packages: string, pallet: string,
+    package: string, netPrice: string, cartons: string, close: string, wrongQuantity: string,
+    wrongQntDesc: string
+  }
 
   itemNumber: number = 9;
 
@@ -33,6 +35,8 @@ export class ShopComponent implements OnInit {
   private _searchTerm: string;
   private _isGasztro: string;
   private _isRetail: string;
+  // ez is string lesz, ha már eddig így használták..
+  private _isProjekt: string;
   form: FormGroup;
   cartArray: Oitm[];
   startIndex: number;
@@ -57,7 +61,7 @@ export class ShopComponent implements OnInit {
 
   constructor(private oitmService: OitmService, private router: Router, private formBuilder: FormBuilder
   ) {
-   }
+  }
 
   ngOnInit() {
 
@@ -69,7 +73,7 @@ export class ShopComponent implements OnInit {
     this.buttons = [1, 2, 3, 4, 5];
 
     this.listAllOitm();
-   
+
     if (this.oitmService.cartItems != null) {
       this.cartArray = this.oitmService.cartItems;
     }
@@ -83,36 +87,42 @@ export class ShopComponent implements OnInit {
       orderQuantity: 1,
 
     });
-    
+
   }
 
   listAllOitm() {
     this.oitmService.getAll().subscribe(
       data => {
-        //console.log(data);
-        this.productArray = data 
+        //console.log(data)
+        data.forEach(data => {
+          console.log(data.u_vevokodok, data.projekt, data.itemcode)
+        });
+        this.productArray = data;
         this.setImages();
       },
-      error => { console.warn(error) },
+      error => {
+        console.warn(error);
+      },
 
-      () => { 
+      () => {
         this.productArray.sort((a, b) => a.itemname.localeCompare(b.itemname))
         this.checkVevokod();
         this.filteredProductArray = this.filteredForVevokod;
         //console.log(this.filteredProductArray);
-        //this.filteredProductArray = this.productArray 
-        this.resizingPegination()
+        //this.filteredProductArray = this.productArray
+        this.resizingPegination();
       }
-    )
-      
+    );
+
   }
+
   getIndex(i: number) {
     this.activeCardIndex = i;
   }
 
   addToCart(item: Oitm) {
 
-    
+
     let isCreated = false;
     let modifiedItem: Oitm;
 
@@ -132,17 +142,17 @@ export class ShopComponent implements OnInit {
             modifiedItem = currentItem;
             item.quantity = modifiedItem.quantity;
             isCreated = true;
-            //if (isCreated) {
-              if(this.nullCheck(+this.inputQuantity, currentItem)){
+            // if (isCreated) {
+            if (this.nullCheck(+this.inputQuantity, currentItem)) {
 
-                item.quantity =  this.inputQuantity + item.quantity;
-                currentItem.quantity = item.quantity;
+              item.quantity = this.inputQuantity + item.quantity;
+              currentItem.quantity = item.quantity;
 
-              }
-              
-           // }
+            }
+
+            // }
           }
-          
+
         }
       )
     }
@@ -181,10 +191,10 @@ export class ShopComponent implements OnInit {
   }
 
   nullCheck(inputQuantity: number, currentItem: Oitm) {
-        if (inputQuantity < currentItem.miN_KARTON) {
-       
-          this.isWrongQuantity = true;
-    }else{
+    if (inputQuantity < currentItem.miN_KARTON) {
+
+      this.isWrongQuantity = true;
+    } else {
       return true;
     }
 
@@ -201,18 +211,15 @@ export class ShopComponent implements OnInit {
     )
 
 
-
     for (let i = 0; i < this.buttons.length; i++) {
 
       if (buttonIndex == 3 && currentButtons[4] < this.filteredProductArray.length / this.itemNumber || buttonIndex > 3 && currentButtons[4] == this.filteredProductArray.length / this.itemNumber - 1) {
         this.buttons[i]++;
-      }
-      else if (buttonIndex > 3 && currentButtons[4] < this.filteredProductArray.length / this.itemNumber) {
+      } else if (buttonIndex > 3 && currentButtons[4] < this.filteredProductArray.length / this.itemNumber) {
         this.buttons[i] += 2;
       } else if ((buttonIndex == 1 && currentButtons[1] != 2) || (buttonIndex == 0 && currentButtons[0] == 2)) {
         this.buttons[i]--;
-      }
-      else if (buttonIndex < 1 && currentButtons[0] != 1) {
+      } else if (buttonIndex < 1 && currentButtons[0] != 1) {
         this.buttons[i] -= 2;
       }
 
@@ -251,6 +258,7 @@ export class ShopComponent implements OnInit {
 
     }
   }
+
   next() {
     if (this.lastIndex < this.filteredProductArray.length - 1) {
       if (this.startIndex < this.filteredProductArray.length - 18 && this.filteredProductArray.length > 45 && this.prevButtonIndex >= 2) {
@@ -267,38 +275,46 @@ export class ShopComponent implements OnInit {
     }
   }
 
-
-  filteredProducts(searchString: string, gasztroString: string, retailString: string) {
+  filteredProducts(searchString: string, gasztroString: string, retailString: string, projektString: string) {
 
     this.filteredProductArray = this.filteredForVevokod;
     //console.log(this.productArray);
     this.resizingPegination();
-    if (searchString || gasztroString || retailString) {
+    if (searchString || gasztroString || retailString || projektString) {
       if (searchString) {
         this.filteredProductArray = this.filteredProductArray.filter(product => {
           if (product.itemname && product.itemname.toLowerCase().includes(searchString.toLowerCase())) {
             return true;
           }
           return false;
-        })
+        });
       }
       this.resizingPegination();
 
-      if(gasztroString){
+      if (gasztroString) {
         this.filteredProductArray = this.filteredProductArray.filter(product => {
           if (product.gasztro === 'Y') {
             return true;
           }
           return false;
-        })
+        });
+      }
+
+      if (projektString) {
+        this.filteredProductArray = this.filteredProductArray.filter(product => {
+          if (product.projekt === 'Y') {
+            return true;
+          }
+          return false;
+        });
       }
 
       this.resizingPegination();
 
-      
-      if(retailString){
+
+      if (retailString) {
         this.filteredProductArray = this.filteredProductArray.filter(product => {
-   
+
           if (product.retail === 'Y') {
             return true;
           }
@@ -306,23 +322,23 @@ export class ShopComponent implements OnInit {
         })
       }
       this.resizingPegination();
-      
+
       return this.filteredProductArray;
 
-    }else{
+    } else {
       return this.filteredForVevokod;
     }
 
   }
 
-  
-  resizingPegination(){
+
+  resizingPegination() {
 
     this.prevButton = 1;
     this.startIndex = 0;
     this.lastIndex = 9;
     this.buttons = [1, 2, 3, 4, 5],
-    this.prevButtonIndex = 0;
+      this.prevButtonIndex = 0;
 
     if ((this.filteredProductArray.length / this.itemNumber) < 4) {
 
@@ -335,7 +351,7 @@ export class ShopComponent implements OnInit {
     if (peginationLength % this.itemNumber == 0) {
       return peginationLength / this.itemNumber;
     } else {
-      return Math.floor(peginationLength / this.itemNumber) +1;
+      return Math.floor(peginationLength / this.itemNumber) + 1;
     }
   }
 
@@ -346,95 +362,135 @@ export class ShopComponent implements OnInit {
 
   set searchTerm(value: string) {
     this._searchTerm = value;
-    this.filteredProductArray = this.filteredProducts(value, this._isGasztro, this._isRetail);
+    this.filteredProductArray = this.filteredProducts(value, this._isGasztro, this._isRetail, this._isProjekt);
   }
 
-  get isGasztro(): string{
+  get isGasztro(): string {
     return this._isGasztro;
   }
 
-  set isGasztro(value: string){
+  set isGasztro(value: string) {
     this._isGasztro = value;
-    this.filteredProductArray = this.filteredProducts(this._searchTerm, value, this._isRetail);
-    
+    this.filteredProductArray = this.filteredProducts(this._searchTerm, value, this._isRetail, this._isProjekt);
+
   }
 
-  get isRetail(): string{
-    return this._isRetail
+  get isProjekt(): string {
+    return this._isProjekt;
   }
 
-  set isRetail(value: string){
+  set isProjekt(value: string) {
+    this._isProjekt = value;
+    this.filteredProductArray = this.filteredProducts(this._searchTerm, this._isGasztro, this._isRetail, value); //
+  }
+
+  get isRetail(): string {
+    return this._isRetail;
+  }
+
+  set isRetail(value: string) {
     this._isRetail = value;
-    this.filteredProductArray = this.filteredProducts(this._searchTerm, this._isGasztro, value);
+    this.filteredProductArray = this.filteredProducts(this._searchTerm, this._isGasztro, value, this._isProjekt);
   }
 
   setImages() {
     this.productArray.forEach(
-      
       product => {
-        this.counter++
+        this.counter++;
         //console.log(product.itemcode)
         let periodic_itemcode = product.itemcode.replace("/", "");
         //console.log(periodic_itemcode);
         const src = 'assets/img/' + periodic_itemcode + '.jpg';
         product.image = src;
-              
+
         product.quantity = 0;
 
         this.testCounter++;
       }
-    )
+    );
   }
-  changeQuantityStatus(){
+
+  changeQuantityStatus() {
     this.isWrongQuantity = false;
   }
 
-  checkVevokod(){
+  checkVevokod() {
     this.counter = 0;
     this.filteredForVevokod = [];
     this.productArray.forEach(
+
       product => {
-        if(product.u_vevokodok != null){
-         // console.log(product);
-         this.splitingString(product);
-        }else{
-          
+        if (product.u_vevokodok != null) {
+          // console.log(product);
+          this.splitingString(product);
+        } else {
+
           this.counter++;
           this.filteredForVevokod.push(product);
         }
       }
-    )
+    );
     //console.log(this.filteredForVevokod)
     //console.log(this.counter);
   }
 
-  splitingString(product: Oitm){
-    this.splitStringArray = product.u_vevokodok.split(',')
+  splitingString(product: Oitm) {
+    console.log(product.u_vevokodok);
+    this.splitStringArray = product.u_vevokodok.split(',');
     //console.log(this.splitStringArray)
     this.splitStringArray.forEach(
-     splitString => {
-      // console.log('felhasznalo: ' + this.user.lastName)
-       if(splitString === this.user.lastName){
-         //console.log('bejött')
-         this.filteredForVevokod.push(product);
-       }
-     }
-    )
+      splitString => {
+        // console.log('felhasznalo: ' + this.user.lastName)
+        if (splitString === this.user.lastName) {
+          //console.log('bejött')
+          this.filteredForVevokod.push(product);
+        }
+      }
+    );
   }
 
   changeLanguage(language: string) {
     if (language === 'HUN') {
-      this.shopLanguage = { search: 'Keresés', productSearch: 'Termék keresés', packagingUnit: 'Csomagolási egység', minOrderQuantity: 'Minimum rendelés',
-                            price: 'Egységár', next: 'Következő', previous: 'Előző', karton: 'Karton', packages: 'csomag', pallet: 'Raklap', package : 'csomag',
-                            netPrice : 'Nettó egységár', cartons : 'karton', close: 'Bezár' , wrongQuantity: 'Helytelen mennyiség!', 
-                            wrongQntDesc: 'A Min rendelhető mennyiségnél kevesebbet nem adhat meg.' }
+      this.shopLanguage = {
+        search: 'Keresés',
+        productSearch: 'Termék keresés',
+        packagingUnit: 'Csomagolási egység',
+        minOrderQuantity: 'Minimum rendelés',
+        price: 'Egységár',
+        next: 'Következő',
+        previous: 'Előző',
+        karton: 'Karton',
+        packages: 'csomag',
+        pallet: 'Raklap',
+        package: 'csomag',
+        netPrice: 'Nettó egységár',
+        cartons: 'karton',
+        close: 'Bezár',
+        wrongQuantity: 'Helytelen mennyiség!',
+        wrongQntDesc: 'A Min rendelhető mennyiségnél kevesebbet nem adhat meg.'
+      };
 
 
     } else {
 
-      this.shopLanguage = { search: 'Search', productSearch: 'Product search', packagingUnit: 'Packaging unit', minOrderQuantity: 'Min order quantity',
-       price: 'Price', next: 'Next', previous: 'Previous', karton : 'Carton', packages : 'packages', pallet : 'Pallet', package: 'package',
-       netPrice : 'Net unit price', cartons : 'cartons', close : 'Close', wrongQuantity: 'Wrong quantity!', wrongQntDesc: 'Please do not enter les quantity then min order quantity.'}
+      this.shopLanguage = {
+        search: 'Search',
+        productSearch: 'Product search',
+        packagingUnit: 'Packaging unit',
+        minOrderQuantity: 'Min order quantity',
+        price: 'Price',
+        next: 'Next',
+        previous: 'Previous',
+        karton: 'Carton',
+        packages: 'packages',
+        pallet: 'Pallet',
+        package: 'package',
+        netPrice: 'Net unit price',
+        cartons: 'cartons',
+        close: 'Close',
+        wrongQuantity: 'Wrong quantity!',
+        wrongQntDesc: 'Please do not enter les quantity then min order quantity.'
+      };
 
     }
   }

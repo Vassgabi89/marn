@@ -23,12 +23,12 @@ export class OitmService {
   private _sum: number;
 
   cartStatus = new Subject<number>();
-  
+
 
   constructor(
     private http: HttpClient
   ) {}
-   
+
     getAll(): Observable<Oitm[]>{
       return this.http.get<Oitm[]>(this.apiUrl);
     }
@@ -45,17 +45,17 @@ export class OitmService {
     getByColumn(col: string, value: string): Observable<Oitm[]>{
       return this.http.get<Oitm[]>(`${this.apiUrl}/${col}/${value}`);
 
-    } 
+    }
     getCRD1ByColumn(col: string, value: string): Observable<CRD1[]>{
       return this.http.get<CRD1[]>(`${this.apiUrl}/crd1/${col}/${value}`);
 
-    }    
+    }
 
     getBySelect(value: string): Observable<Oitm[]>{
       return this.http.get<Oitm[]>(`${this.apiUrl}/select/${value}`);
 
     }
-       
+
     update(oitm: any): Observable<any> {
       return this.http.put(
         `${this.apiUrl}/${oitm.cardcode}`,
@@ -82,7 +82,7 @@ export class OitmService {
     get cartItems(): Oitm[] {
       return this._cartItems;
     }
-  
+
     @Input()
     set cartItems(value: Oitm[]) {
       this._cartItems = value;
@@ -91,7 +91,7 @@ export class OitmService {
     get userArray(): User[] {
       return this._userArray;
     }
-  
+
     @Input()
     set userArray(value: User[]) {
       this._userArray = value;
@@ -101,11 +101,11 @@ export class OitmService {
     get sum(): number {
       return this._sum;
     }
-  
+
     @Input()
     set sum(value: number) {
       this._sum = value;
     }
 
-   
+
 }

@@ -1,0 +1,14 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th>Akció kezdete</th>
+        <th scope="col">Akció vége</th>
+      </tr>
+    </thead>
+    <tr *ngFor="let period of discount_periods">
+        <td>{{ period.startDate | date }}</td>
+        <td>{{ period.endDate | date }}</td>
+      </tr>
+    <tbody>
+    </tbody>
+  </table>

@@ -46,6 +46,8 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
 import { ToastrModule } from 'ngx-toastr';
+import { DatePickerComponent } from './common/date-picker/date-picker.component';
+import { DiscontPeriodTableComponent } from './common/discont-period-table/discont-period-table.component';
 
 
 @NgModule({
@@ -77,7 +79,9 @@ import { ToastrModule } from 'ngx-toastr';
     ShopComponent,
     CartComponent,
     OrderComponent,
-    ItemSelectorDirective
+    ItemSelectorDirective,
+    DatePickerComponent,
+    DiscontPeriodTableComponent
   ],
   imports: [
     BrowserModule,

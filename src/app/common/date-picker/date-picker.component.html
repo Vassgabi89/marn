@@ -1,0 +1,7 @@
+<h5 class="vmi">Időszaki kedvezményeink megtekintéséhez, kérem, válassza ki a szállítás napját:</h5>
+<div class="form-group">
+    <input class="form-control" id="date-picker"
+        name="date-picker" type="date" placeholder="selectedDate" (change)="datePicked()">
+</div>
+<h6 *ngIf="dateIsDiscount">A választott nap kedvezményes!</h6>
+<h6 *ngIf="!dateIsDiscount">A választott nap nem kedvezményes.</h6>

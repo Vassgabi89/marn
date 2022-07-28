@@ -1,4 +1,13 @@
 <div class=" container jumbotron">
+<div class="row">
+    <div class="col-md-4">
+        <app-date-picker (newItemEvent)="setPriceByDiscountPeriod($event)"></app-date-picker>       
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <app-discont-period-table></app-discont-period-table>        
+    </div>
+</div>
 
     <div *ngIf="productArray == null" class="d-flex justify-content-center text-secondary">
         <div class="spinner-border" role="status">
@@ -45,13 +54,19 @@
                                 {{shopLanguage.netPrice}}</p>
 
                             {{shopLanguage.price}} : 
-                                <span *ngIf= "product.gasztro === 'N'"  class="badge badge-primary badge-pill">{{product.price}}
+                                <span *ngIf= "priceByDiscountPeriod && product.gasztro === 'N'"  class="badge badge-success badge-pill">{{product.discountPrice}}
                                      {{user.currency}} / {{shopLanguage.package}} </span>
-
+                                <span *ngIf= "product.gasztro === 'N'"  class="badge badge-primary badge-pill">{{product.price}}
+                                    {{user.currency}} / {{shopLanguage.package}} </span>
+                                         
+                                <span *ngIf= "priceByDiscountPeriod && product.gasztro === 'Y' && product.sWeight1 === 1000"  class="badge badge-success badge-pill">{{product.discountPrice}}
+                                     {{user.currency}} / kg </span>
                                 <span *ngIf= "product.gasztro === 'Y' && product.sWeight1 === 1000" class="badge badge-primary badge-pill">{{product.price}}
                                     {{user.currency}} / kg </span>
-
-                                <span *ngIf= "product.gasztro === 'Y' && (product.sWeight1 > 1000 || product.sWeight1 < 1000) " class="badge badge-primary badge-pill">{{product.price}}
+                                         
+                                <span *ngIf= "priceByDiscountPeriod && product.gasztro === 'Y' && (product.sWeight1 > 1000 || product.sWeight1 < 1000) "  class="badge badge-success badge-pill">{{product.price}}
+                                     {{user.currency}} / {{shopLanguage.package}} </span>
+                                <span *ngIf= "product.gasztro === 'Y' && (product.sWeight1 > 1000 || product.sWeight1 < 1000) " class="badge badge-primary badge-pill">{{product.discountPrice}}
                                     {{user.currency}} / {{shopLanguage.package}}  </span>
                         </div>
 
@@ -63,7 +78,7 @@
                                         <input  (input)="inputQuantity=$event.target.value"  style="font-size: small;"
                                             onkeydown="return event.keyCode !== 69" class="form-control " min=1
                                             type="number" id="orderQuantity" formControlName="orderQuantity"
-                                            name="orderQuantity" class="form-control" />
+                                            name="orderQuantity" class="form-control"/>
                                     </div>
                                     <p style="color: #bbbfbc; font-size: 15px;  margin-top: 5px; margin-bottom: -4px;">
                                         #</p>

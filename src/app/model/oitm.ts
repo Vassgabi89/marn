@@ -15,8 +15,11 @@ export class Oitm {
     termeK_LISTAZAS : string = '';
     gasztro : string = '';
     retail : string = '';
+    projekt : string = '';
     miN_KARTON : number = 0;
     karton : number = 0;
-
+    discountPrice?: number = 0;
+    quantityToGetDiscount: number = 0;
+    quantityDiscountPrice?: number = 0;
 }
 

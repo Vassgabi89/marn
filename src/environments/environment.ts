@@ -5,8 +5,7 @@
 export const environment = {
   production: false,
   //baseUrl: "http://192.168.1.62:4000",
-  //baseUrl: "http://localhost:4000",
-  baseUrl: "http://192.168.120.86:4000", //peti gépe
+   baseUrl: "http://localhost:4000",
 };
 
 /*

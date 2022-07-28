@@ -4,6 +4,7 @@ import { Oitm } from 'src/app/model/oitm';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from 'src/app/model/user';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 
@@ -49,6 +50,7 @@ export class ShopComponent implements OnInit {
   isWrongQuantity: boolean = false;
   counter: number = 0;
   splitStringArray: string[];
+  priceByDiscountPeriod: boolean = false
 
 
   //private toastr: ToastrService,
@@ -87,7 +89,7 @@ export class ShopComponent implements OnInit {
   listAllOitm() {
     this.oitmService.getAll().subscribe(
       data => {
-        console.log(data);
+        //console.log(data);
         this.productArray = data 
         this.setImages();
       },
@@ -155,7 +157,6 @@ export class ShopComponent implements OnInit {
         this.nullCheck(+this.inputQuantity, item)
       }
     }
-
 
     this.oitmService.cartStatus.next(this.cartArray.length);
 
@@ -266,14 +267,14 @@ export class ShopComponent implements OnInit {
     }
   }
 
-  filteredProducts(searchString: string, gasztroString : string, retailString : string) {
-   
-      this.filteredProductArray = this.filteredForVevokod;
-      console.log(this.productArray)
-     this.resizingPegination();
+
+  filteredProducts(searchString: string, gasztroString: string, retailString: string) {
+
+    this.filteredProductArray = this.filteredForVevokod;
+    //console.log(this.productArray);
+    this.resizingPegination();
     if (searchString || gasztroString || retailString) {
-     // console.log(this.buttons);
-      if(searchString){
+      if (searchString) {
         this.filteredProductArray = this.filteredProductArray.filter(product => {
           if (product.itemname && product.itemname.toLowerCase().includes(searchString.toLowerCase())) {
             return true;
@@ -373,8 +374,8 @@ export class ShopComponent implements OnInit {
       product => {
         this.counter++
         //console.log(product.itemcode)
-        let periodic_itemcode = product.itemcode.replace("/", "")
-        console.log(periodic_itemcode)
+        let periodic_itemcode = product.itemcode.replace("/", "");
+        //console.log(periodic_itemcode);
         const src = 'assets/img/' + periodic_itemcode + '.jpg';
         product.image = src;
               
@@ -436,6 +437,30 @@ export class ShopComponent implements OnInit {
        netPrice : 'Net unit price', cartons : 'cartons', close : 'Close', wrongQuantity: 'Wrong quantity!', wrongQntDesc: 'Please do not enter les quantity then min order quantity.'}
 
     }
+  }
+
+  setPriceByDiscountPeriod(_priceByDiscountPeriod: boolean) {
+     if (_priceByDiscountPeriod) {
+        this.priceByDiscountPeriod = true}
+      else this.priceByDiscountPeriod = false
+  }
+
+  //időszaki kedvezmény
+  setDiscountPrices() {
+    this.filteredProductArray.forEach(product => {
+      product.discountPrice = product.price*0.9
+    });
+  }
+
+  //mennyiségi kedvezmény
+  setQuantityDiscountPrices() {
+    this.filteredProductArray.forEach(product => {
+      this.priceByDiscountPeriod ? (product.quantityDiscountPrice = product.price*0.8) : (product.quantityDiscountPrice = product.price*0.9)
+    });
+  }
+
+  checkQuantityDiscountPrices() {
+    console.log(this.inputQuantity)
   }
 
 

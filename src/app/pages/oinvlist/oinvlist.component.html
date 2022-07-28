@@ -1,0 +1,14 @@
+<app-loader></app-loader>
+<div class="container">
+    <div id="oinv">
+        <ag-grid-angular #agGrid style="width: 1100px; height: 650px;" class="ag-theme-material" id="oinv"
+            (gridReady)="onGridReady($event,'oinv')"
+            [rowData]="oinvs "
+            [columnDefs]="columnDefs" 
+            [getRowNodeId]="getRowNodeId" 
+            [rowClassRules]="rowClassRules"
+            rowSelection="single">
+        </ag-grid-angular>
+    </div>
+    
+</div>

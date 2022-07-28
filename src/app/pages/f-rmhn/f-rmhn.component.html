@@ -1,0 +1,16 @@
+<app-loader></app-loader>
+<div>RMHN! </div>
+<div class="container">    
+
+
+
+<div id="rmhn">
+    <ag-grid-angular #agGrid style="width: 1000px; height: 650px;" class="ag-theme-material" id="rmhn"
+        (gridReady)="onGridReady($event,'rmhn')"
+        [rowData]="rmhns "
+        [columnDefs]="columnDefs" 
+        [getRowNodeId]="getRowNodeId" 
+        rowSelection="single">
+    </ag-grid-angular>
+</div>
+</div>    

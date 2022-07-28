@@ -1,0 +1,67 @@
+<h2>{{cartLanguage.cart}}</h2>
+<div class="container jumbotron">
+    <table id="list-table" class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th></th>
+                <th>{{cartLanguage.productName}}</th>
+                <th>{{cartLanguage.price}}</th>
+                <th >{{cartLanguage.quantity}}</th>
+                <th>{{cartLanguage.lineTotal}}</th>
+                <th>{{cartLanguage.weight}}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="orc-list-table-body">
+            <tr *ngFor="let item of cartItems">
+                <td> <img [src]="item.image" class="card-img-top card-img-top image-sizing" alt="..."></td>
+                <td style="font-size: small;" >{{ item.itemname }}</td>
+                <td>{{ item.price * item.karton | number }} {{ user.currency}}</td>
+                <td ><button style="border-radius: 20%;" (click)="decreaseQuantity(item.itemcode)"><i class="fa fa-minus"
+                            aria-hidden="true"></i></button> {{item.quantity}} <button  style="border-radius: 20%;"
+                        (click)="increaseQuantity(item.itemcode)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                </td>
+                <td>{{ item.price * item.quantity * item.karton | number}} {{ user.currency}}</td>
+                <td>{{ (item.sWeight1 * item.quantity * item.karton) / 1000 | number}} kg</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-danger" (click)="deleteItem(item.itemcode)"><i class="fa fa-trash"
+                                aria-hidden="true"></i></button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<div class="text-right" style="margin-right: 80px;">
+    <p>{{cartLanguage.totalWeight}} : {{totalWeight / 1000 | number}} Kg</p>
+    <p style="color: #bbbfbc; font-size: 14px; margin-bottom: -4px; margin-top: -4px;">
+        {{cartLanguage.netPrice}}</p>
+    <p>{{cartLanguage.fullPrice}} : {{sum | number}} {{user.currency}}</p>
+    <button (click)=" navigateOrder()"  data-toggle="modal" data-target="#weightMode" type="button" class="btn btn-info pull-left">{{cartLanguage.order}}</button>
+</div>
+
+<div *ngIf="notEnoughtWeight" class="modal fade" id="weightMode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{cartLanguage.wrongWeight}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click) = "weightIsEnought()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          {{cartLanguage.wrongWeightDesc}}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click) = "weightIsEnought()">{{cartLanguage.close}}
+            </button>
+        </div>
+    </div>
+</div>
+</div>

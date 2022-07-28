@@ -1,0 +1,17 @@
+<h1 mat-dialog-title mat-dialog-draggable-title>{{data.title}}</h1>
+
+<ag-grid-angular #agGrid style="width: 1000px; height: 500px;" class="ag-theme-material"
+    [rowData]="data.item$" 
+    [columnDefs]="data.columnDefs" 
+    [defaultColDef]="defaultColDef"
+    [rowClassRules]="rowClassRules"
+    (selectionChanged)="onSelectionChanged($event)" 
+    (firstDataRendered)="onFirstDataRendered($event)" 
+    (gridReady)="onGridReady($event)"
+    rowSelection="single">
+</ag-grid-angular>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Mégse</button>
+  <button mat-button [mat-dialog-close]="getBackValue()" cdkFocusInitial>Kiválaszt</button>
+</div>

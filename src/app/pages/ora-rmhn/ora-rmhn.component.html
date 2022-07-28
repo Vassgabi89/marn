@@ -1,0 +1,49 @@
+<app-loader></app-loader>
+<div class="container">
+    <form #editForm="ngForm" (ngSubmit)="onSubmit()">
+        <div id="rmhn">
+            <div class="row">
+                <div class="form-group col-sm">
+                    <label for="">ID</label>
+                    <input tabindex="1" 
+                        #CardCode="ngModel" name="id" label = "ID"
+                        [(ngModel)]="rmhn.id" type="text"
+                        class="form-control">
+                </div>
+                <div class="form-group col-sm">
+                    <label for="">Rendelés mód</label>
+                    <input 
+                        #CardCode="ngModel" name="rendmod_hivnev"
+                        [(ngModel)]="rmhn.rendmod_hivnev" type="text" class="form-control">
+                </div>
+                <div class="form-group col-sm">
+                    <label for="">Megjegyzés</label>
+                    <input #ManualNum="ngModel" name="megjegyzes"
+                        [(ngModel)]="rmhn.megjegyzes" type="text" class="form-control">
+                </div>
+                <div class="form-group col-sm">
+                    <label for="">Létrehozta</label>
+                    <input #ManualNum="ngModel" name="user_created"
+                        [(ngModel)]="rmhn.user_created" type="text" class="form-control">
+                </div>
+                <div class="form-group col-sm">
+                    <label for="">Létrehozva</label>
+                    <input #ManualNum="ngModel" name="date_created"
+                        [(ngModel)]="rmhn.date_created" type="date" class="form-control" useValueAsDate>
+                </div>
+            </div>            
+        </div>
+        <button class="btn btn-primary mr-2" type="submit">Aktualizál</button>
+        <button routerLink="/products" class="btn btn-secondary mr-2">Mégse</button>
+    </form>
+    <div id="rmhv">
+    <ag-grid-angular #agGrid style="width: 1000px; height: 650px;" class="ag-theme-material" id="rmhv"
+        (gridReady)="onGridReady($event,'rmhv')"
+        [rowData]="rmhvs "
+        [columnDefs]="columnDefs" 
+        [getRowNodeId]="getRowNodeId" 
+        rowSelection="single">
+    </ag-grid-angular>
+    </div>
+
+</div>

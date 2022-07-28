@@ -1,0 +1,39 @@
+<nav class="navbar  navbar-expand-lg navbar-light bg-light ">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li *ngIf="!logedIn()" class="nav-item">
+        <a class="nav-link" routerLink="/login">Login</a>
+      </li>
+      <li *ngIf="logedIn()" class="nav-item" (click)="onLogout()">
+        <a class="nav-link">Logout</a>
+      </li>
+      <li *ngIf="logedIn()" class="nav-item">
+        <a class="nav-link" routerLink="/rendeles">{{menuLanguage.orders}}</a>
+      </li>
+      <li *ngIf="logedIn()" class="nav-item">
+        <a class="nav-link" routerLink="/oinvlist">{{menuLanguage.bills}}</a>
+      </li>
+      <li *ngIf="logedIn()" class="nav-item">
+        <a class="nav-link" routerLink="/shop">{{menuLanguage.products}}</a>
+      </li>
+    </ul>
+    <ul *ngIf="logedIn()" className="navbar-nav ml-auto">
+      <a *ngIf="itemsInCart != 0" class="nav-link" routerLink="/myCart">
+          <mat-icon [matBadge]=itemsInCart
+                    matBadgePosition="above after"
+                   
+                    matBadgeColor="warn"
+                    matBadgeOverlap=false
+          ><i class="fas fa-shopping-cart"></i></mat-icon>
+          {{menuLanguage.cart}}</a>
+      <a *ngIf="itemsInCart == 0" class="nav-link text-primary cursor-pointer" >
+          <i class="fas fa-shopping-cart"></i>{{menuLanguage.cart}}</a>
+  </ul>
+  </div>
+</nav>

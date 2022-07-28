@@ -1,0 +1,58 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "~ag-grid-community/dist/styles/ag-theme-fresh.css";
+@import "~ag-grid-community/dist/styles/ag-theme-material.css";
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~ngx-toastr/toastr';
+
+.ng-valid[required]{
+    border-left: 5px solid green;
+}
+/*
+.ng-invalid:not(form){
+    border-left: 5px solid red;
+}
+.ng-dirty:not(form){
+    background-color: aqua;
+}
+*/
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.ag-theme-material .record-found {
+    background-color: aqua !important;
+}
+.ag-theme-material .akcio-kiemelt {
+    background-color: lightgreen !important;
+}
+
+.ag-theme-material .ag-row-selected {
+    background-color: #8eb6fd;
+}
+
+.ag-theme-material .ag-ltr .ag-cell-focus {
+    border: 1px solid red;
+}
+
+.number-cell {
+    text-align: right;
+}
+
+.ag-body-viewport-wrapper.ag-layout-normal {
+    overflow-x: scroll;
+  }
+
+.attention {
+    background-color: lightcoral !important;
+}
+
+[mat-dialog-draggable-title] {
+    margin: -24px -24px 0px -24px !important;
+    padding: 10px 24px;
+    background: #369;
+    color: #fff;
+    cursor: move;
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

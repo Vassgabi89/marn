@@ -1,0 +1,1132 @@
+@mixin scrollbar($size: 6px, $color: $xl-cool-grey-4-40) {
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+      width: $size * 2;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-thumb {
+      border-radius: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+      background-clip: padding-box;
+      background-color: $color;
+      border: $size / 2 solid transparent;
+      min-height: 50px;
+  }
+
+  &::-webkit-scrollbar:horizontal {
+      height: $size * 2;
+  }
+}
+
+
+// -- COLORS
+$true-white: #fff;
+$xl-white: $true-white;
+$true-black: #000;
+$xl-black: $true-black;
+$transparent-black: rgba(0, 0, 0, .375);
+// ------------------------------------------------------------------------------------------------
+$d-gray1: mix($xl-white, $xl-black, 81.5); // 3.0 color: #d0d0d0 <— // 2.0 color: #dcdcdc;
+$d-gray2: mix($xl-white, $xl-black, 73.5); // 3.0 color: #bbbbbb <— // 2.0 color: #b4b4b4;
+$d-gray3: mix($xl-white, $xl-black, 59.3); // 3.0 color: #979797 <— // 2.0 color: #8c8c8c;
+$d-gray4: mix($xl-white, $xl-black, 32.4); // 3.0 color: #535353 <— // 2.0 color: #575757;
+$d-gray5: $xl-black; // 2.0 color: #313131;
+// Gray Color Variations
+$xl-black-50: mix($xl-white, $xl-black, 49.675); // #7f7f7f -> mapped to #7f7f7f
+$xl-cool-grey-11: #53565a;
+$xl-cool-grey-10: #63666a;
+$xl-cool-grey-7: #97999b;
+$xl-cool-grey-4: #bbbcbc;
+$xl-cool-grey-2: #d0d0ce;
+$xl-cool-grey-4-75: rgba(204, 205, 205, 1); // #cccdcd
+$xl-cool-grey-4-40: mix($xl-white, $xl-black, 89.5); // #e4e4e4 -> mapped to #e4e4e4
+$xl-cool-grey-11-10: mix($xl-white, $xl-black, 93.5); // #edeeee -> mapped to #eee
+$xl-cool-grey-2-20: mix($xl-white, $xl-black, 96.5); // #f6f6f5 -> mapped to #f6f6f6
+// ------------------------------------------------------------------------------------------------
+$d-blue: #00a3e0;
+$d-blue-light: #72c7e7;
+$d-blue-mid: #00a1de;
+$xl-blue: $d-blue;
+$xl-blue-light: $d-blue-light;
+$xl-blue-mid: $d-blue-mid;
+// btn-primary ACTIVE
+$xl-blue-107: #0097d0; // mix($xl-black, $xl-blue, 7.6); // #0097cf
+$xl-blue-80: mix($xl-white, $xl-blue, 20); // #33b5e6
+$xl-blue-70: mix($xl-white, $xl-blue, 29.75); // #
+$xl-blue-35: mix($xl-white, $xl-blue, 65.25); // #a6dff4
+$xl-blue-20: mix($xl-white, $xl-blue, 80); // #ccecf9
+$xl-blue-10: mix($xl-white, $xl-blue, 89.67); // #e5f5fb
+$xl-sky-blue: #33b4e5;
+$xl-sky-blue-light: #e5f6fc;
+$xl-sky-blue-mid: #bbe4f4;
+// ------------------------------------------------------------------------------------------------
+$d-orange: #f39200;
+$xl-orange: $d-orange;
+$xl-orange-10: mix($xl-white, $d-orange, 87.49); // #fdf435 -> mapped to #fdf1df
+$xl-orange-20: mix($xl-white, $d-orange, 80); // #fde9cc -> mapped to #fde9cc
+$xl-orange-70: mix($xl-white, $d-orange, 29); // #f6b24c -> mapped to #f6b24a
+$d-red: #e30613;
+$xl-red: $d-red;
+$xl-red-10: mix($xl-white, $d-red, 90); // #fce6e7 -> mapped to #fce6e7
+$xl-red-20: mix($xl-white, $d-red, 80); // #f9cdd0 -> mapped to #f9cdd0
+$xl-red-70: mix($xl-white, $d-red, 29.75); // #eb5059 -> mapped to #eb5059
+$d-green: #86bc25;
+$d-green-dark: mix($xl-black, $d-green, 10); // 2.0 color: #3c8a2e;
+$d-green-light: mix($xl-white, $d-green, 30); // 2.0 color: #bdd203;
+$xl-green: $d-green;
+$xl-green-10: mix($xl-white, $d-green, 89.6); // #f2f839 -> mapped to #f2f8e8
+$xl-green-20: mix($xl-white, $d-green, 80); // #e7f2d3 -> mapped to #e7f2d3
+$xl-green-70: mix($xl-white, $d-green, 30); // #aad066 -> mapped to #aad066
+// TODO: determine use, correct setting for the following variables
+// ------------------------------------------------------------------------------------------------
+$xl-mono-dark: $d-gray5;
+$xl-mono-light: $d-gray3;
+$xl-mono-mid: $d-gray4;
+// ------------------------------------------------------------------------------------------------
+$xl-overcast: #a5adc0;
+$xl-overcast-dark: #778aa4;
+$xl-overcast-light: #f5f6f9;
+$xl-overcast-mid: mix($xl-white, $xl-blue, 80%);
+$xl-black-20: mix($xl-white, $xl-black, 80);            // #cccccc
+
+.xl-grid-container {
+margin-left: 30px;
+}
+
+.ag-dnd-ghost {
+  background-color: $xl-blue !important; // scss-lint:disable ImportantRule
+  border-color: transparent !important; // scss-lint:disable ImportantRule
+  box-shadow: 2px 3px 5px rgba($xl-black-50, .5);
+  color: $xl-white;
+}
+
+// -- SKIN
+// NOTE:
+// - 'foreground': color (text-color)
+
+// -- Grid
+$ag-style: 'xl-list-grid';
+$ag-root-font-family: 'Open Sans', verdana, sans-serif;
+$ag-root-font-size: 13px;
+
+// --- Grid: Border (sets value for all)
+$ag-border-1: none; // format: border shorthand
+$ag-border-color-1: $xl-black; // NOT used
+
+// --- Grid: Background: (grid, footer, tool, status, drop, pivot column)
+$ag-background-1: $xl-white;
+
+// --- Grid: Color (text)
+$ag-foreground-1: $xl-black;
+
+// --- Grid: Scrollbars (NOT used)
+$ag-scrollbar-background: inherit;
+$ag-scrollbar-thumb: inherit;
+//--------
+
+// -- Header
+$ag-header-background-1: $xl-white;
+$ag-header-font-weight: 700;
+
+// --- Header: Color (text, icon)
+$ag-header-foreground-1: $xl-cool-grey-7;
+
+// --- Header: Select All checkbox (NOT used)
+$ag-header-select-padding: 5px 0 0 5px;
+
+// --- Header: Filter (value gets appended to header cell)
+$ag-row-floating-background-color: transparent;
+//--------
+
+// -- Row
+// --- Row: Selected
+$ag-row-selected-background-color: transparent;
+$ag-row-group-background-color: $xl-cool-grey-2-20;
+
+// --- Row: Striping
+$ag-row-odd-background-color: $xl-white;
+$ag-row-even-background-color: $xl-white;
+//--------
+
+// -- Cell
+// --- Cell: Focus (border-color)
+// $ag-cell-focused-border: 1px solid $xl-blue; 
+
+$ag-cell-no-focus-border-top: 1px solid transparent;
+$ag-cell-no-focus-border-bottom: 1px solid $xl-cool-grey-4-40;
+$ag-cell-ltr-no-focus-border-right: none;
+$ag-cell-ltr-no-focus-border-left: 1px solid transparent;
+$ag-cell-rtl-no-focus-border-right: 1px solid transparent;
+$ag-cell-rtl-no-focus-border-left: none;
+
+$ag-cell-highlight-border: 1px solid $xl-blue;
+
+// --- Cell: Padding (TRBL)
+$ag-cell-padding: 10px;
+
+// --- Cell: Delta
+$ag-value-change-delta-up-color: $xl-blue-80; // text color
+$ag-value-change-delta-down-color: $xl-red-70; // text color
+$ag-value-change-value-highlight-background-color: $xl-red-70;
+
+// --- Cell: NOT SURE
+$ag-select-background: $xl-blue-10;
+$ag-select-foreground: $xl-black;
+
+$ag-range-selected-color-1: transparent;
+$ag-range-selected-color-2: transparent;
+$ag-range-selected-color-3: transparent;
+$ag-range-selected-color-4: transparent;
+//--------
+
+// -- Menu (sorting, filtering)
+// --- Menu: Border
+$ag-border-color-2: transparent; // color
+
+// --- Menu: Separator (bottom border)
+$ag-separator-color: $xl-black-50;
+
+// -- Menu: Active (selected) menu item
+$ag-menu-option-active-color: $xl-blue-10;
+
+// --- Menu: Tabs
+$ag-tab-border: 1px solid tranparent;
+$ag-tab-background: $xl-white;
+$ag-tab-selected-background: $xl-white;
+$ag-tab-padding: 6px 8px;
+
+// --- Menu: Context (right click)
+$ag-menu-option-padding: 2px 4px;
+$ag-menu-option-shortcut-padding: 2px;
+//--------
+
+// -- Grouping
+$ag-button-background-1: transparent;
+$ag-button-foreground-1: $xl-black;
+$ag-button-border-1: transparent;
+//--------
+
+// -- APPENDED
+// --- Grid
+$xl-border-grid: 1px solid transparent;
+
+// --- Focus Border
+$xl-cell-focused-border-bottom: 1px solid $xl-cool-grey-4-40;
+$xl-cell-focused-border-left: 1px solid transparent; // cells with border set to 'transparent'
+$xl-cell-focused-border-right: transparent;
+$xl-cell-focused-border-top: 1px solid transparent; // cells with border set to 'transparent'
+
+// --- Row - Selected Opacity
+$xl-row-selected-opacity: 0;
+
+// --- Row - checkbox
+$xl-row-unselected-border: $xl-cool-grey-4-75;
+$xl-row-selected-border: $xl-blue;
+$xl-row-selected-background: $xl-white;
+
+// -- Row - Hover
+$xl-row-hover-color: $xl-blue-10;
+
+// --- Column - pinned background
+$xl-pinned-background-color: transparent;
+
+// --- Header
+$xl-border-header: 1px solid $xl-cool-grey-4-75;
+$xl-border-header-separator: transparent; // #45bce8 not #45bdeb in UX
+$xl-header-font-size: 11px;
+
+// --- Header - checkbox
+$xl-header-select-margin: 7px 0 0 13px;
+//--------
+
+// @import 'settings.grid-common';
+
+.#{$ag-style} {
+  // copying bootstrap with line-height, sorts out alignment problems with images beside text
+  color: $ag-foreground-1;
+  font-family: $ag-root-font-family;
+  font-size: $ag-root-font-size;
+  height: 100%;
+  line-height: 1.38;
+
+  // changing the image is same as what bootstrap does, without the images didn't align right
+  img {
+      border: 0;
+      vertical-align: middle;
+  }
+
+  //---- ag-grid GRID Styles ----
+  // note: listed as a child element as well
+  // .ag-bl {}
+
+  // class alters: height, overflow, position
+  // note: listed as a child element as well
+  // .ag-bl-full-height {}
+
+  // class alters: direction
+  // .ag-ltr {}
+
+  // class alters: height
+  // set on element: margin-left, width
+  // .ag-bl-full-height-center {}
+
+  // class alters: border, box-sizing, overflow, position
+  // notes: outside table border
+  .ag-root {
+      border: $xl-border-grid;
+  }
+
+  // class alters: cursor, user-select
+  .ag-font-style {
+      user-select: text;
+  }
+
+  // class alters: box-sizing, display, height, position, overflow, text-overflow, white-space
+  // set on element: left, width
+  .ag-cell {
+      &:focus {
+          outline: transparent;
+          z-index: 1;
+      }
+
+      &.sorted,
+      &.expanded {
+          background-color: $xl-sky-blue-light;
+      }
+  }
+
+  // class alters: padding
+  .ag-cell-not-inline-editing {
+      padding: $ag-cell-padding;
+  }
+
+  // we do not want to color the range color when the cell is also focused
+  .ag-cell-range-selected-1:not(.ag-cell-focus) {
+      background-color: $ag-range-selected-color-1;
+  }
+
+  .ag-cell-range-selected-2:not(.ag-cell-focus) {
+      background-color: $ag-range-selected-color-2;
+  }
+
+  .ag-cell-range-selected-3:not(.ag-cell-focus) {
+      background-color: $ag-range-selected-color-3;
+  }
+
+  .ag-cell-range-selected-4:not(.ag-cell-focus) {
+      background-color: $ag-range-selected-color-4;
+  }
+
+  // class alters: border
+  .ag-cell:focus,
+  .ag-cell-focus,
+  .ag-cell-inline-editing {
+      border-bottom: $xl-cell-focused-border-bottom;
+      border-left: $xl-cell-focused-border-left;
+      border-right: $xl-cell-focused-border-right;
+      border-top: $xl-cell-focused-border-top;
+      outline: transparent;
+  }
+
+  // class alters: border-bottom, border-top
+  .ag-cell-no-focus {
+      border-bottom: $ag-cell-no-focus-border-bottom;
+      border-top: $ag-cell-no-focus-border-top;
+  }
+
+  // class alters: border-left, border-right
+  .ag-ltr .ag-cell-no-focus {
+      border-left: $ag-cell-ltr-no-focus-border-left;
+      border-right: $ag-cell-ltr-no-focus-border-right;
+  }
+
+  .ag-rtl .ag-cell-no-focus {
+      border-left: $ag-cell-rtl-no-focus-border-left;
+      border-right: $ag-cell-rtl-no-focus-border-right;
+  }
+
+  // we use rtl and ltr below, even though it's the same style, so it propertly
+  .ag-rtl .ag-cell-first-right-pinned {
+      border-left: $ag-border-1;
+  }
+
+  .ag-ltr .ag-cell-first-right-pinned {
+      border-left: $ag-border-1;
+  }
+
+  .ag-rtl .ag-cell-last-left-pinned {
+      background-color: $xl-pinned-background-color;
+      border-right: $ag-border-1;
+  }
+
+  .ag-ltr .ag-cell-last-left-pinned {
+      background-color: $xl-pinned-background-color;
+      border-right: $ag-border-1;
+  }
+
+  // this needs to be after the other cell items, so the boarder gets preference
+  .ag-cell-highlight {
+      border: $ag-cell-highlight-border;
+  }
+
+  .ag-cell-highlight-animation {
+      transition: border 1s;
+  }
+
+  // used by the animateShowChangedCellRenderer
+  .ag-value-change-delta {
+      padding-right: 2px;
+  }
+
+  .ag-value-change-delta-up {
+      color: $ag-value-change-delta-up-color;
+  }
+
+  .ag-value-change-delta-down {
+      color: $ag-value-change-delta-down-color;
+  }
+
+  .ag-value-change-value {
+      background-color: transparent;
+      border-radius: 1px;
+      padding-left: 1px;
+      padding-right: 1px;
+      transition: background-color 1s;
+  }
+
+  .ag-value-change-value-highlight {
+      background-color: $ag-value-change-value-highlight-background-color;
+      transition: background-color .1s;
+  }
+
+  .ag-rich-select {
+      background-color: $ag-select-background;
+      border: $ag-border-1;
+      font-size: 14px;
+  }
+
+  .ag-rich-select-value {
+      padding: 2px;
+  }
+
+  .ag-rich-select-list {
+      border-top: 1px solid $ag-separator-color;
+  }
+
+  .ag-rich-select-row {
+      padding: 2px;
+  }
+
+  .ag-rich-select-row-selected {
+      background-color: $ag-menu-option-active-color;
+  }
+
+  .ag-large-text {
+      border: $ag-border-1;
+  }
+
+  // .ag-large-textarea {}
+
+  //---- ag-grid HEADER Styles ----
+  .ag-header-select-all {
+      margin: $xl-header-select-margin;
+  }
+
+  //---- HEADER checkbox Styles ----
+  .ag-header-select-all .xl-base-check {
+      &::before {
+          background-color: $xl-row-selected-border;
+          border-color: $xl-row-selected-border;
+          height: 14px;
+          width: 14px;
+      }
+
+      &::after {
+          border-bottom: 2px solid $xl-row-selected-background;
+          border-right: 2px solid $xl-row-selected-background;
+          left: 4px;
+          top: 2px;
+      }
+  }
+
+  .ag-header-select-all .xl-base-uncheck {
+      &::before {
+          background-color: $ag-header-background-1;
+          border-color: $xl-row-unselected-border;
+          height: 14px;
+          width: 14px;
+      }
+
+      &::after {
+          background-color: $ag-header-background-1;
+          border: 0;
+      }
+  }
+
+  .ag-header-select-all .xl-base-indeterminent::before {
+      background-color: $xl-row-selected-border;
+      border-color: $xl-row-selected-border;
+      height: 14px;
+      width: 14px;
+  }
+
+  .ag-header-select-all .xl-base-indeterminent::after {
+      border: 1px solid $xl-row-selected-background;
+      left: 4px;
+      top: 6px;
+  }
+
+  .xl-base {
+      display: inline-block;
+      height: 16px;
+      position: relative;
+      vertical-align: top;
+      width: 16px;
+
+      &::before {
+          background-color: $xl-row-selected-background;
+          border: 1px solid $xl-row-unselected-border;
+          border-radius: 2px;
+          content: '';
+          height: 16px;
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 16px;
+      }
+  }
+
+  .xl-base-check {
+      &::before {
+          background-color: $xl-row-selected-border;
+          border-color: $xl-row-selected-border;
+      }
+
+      &::after {
+          border-bottom: 2px solid $xl-row-selected-background;
+          border-right: 2px solid $xl-row-selected-background;
+          content: '';
+          height: 9px;
+          left: 5px;
+          position: absolute;
+          top: 3px;
+          transform: rotate(45deg);
+          width: 6px;
+      }
+  }
+
+  .xl-base-uncheck::after {
+      border-bottom: 2px solid $xl-row-selected-background;
+      border-right: 2px solid $xl-row-selected-background;
+      content: '';
+      height: 9px;
+      left: 5px;
+      position: absolute;
+      top: 3px;
+      transform: rotate(45deg);
+      width: 6px;
+  }
+
+  .xl-base-indeterminent::after {
+      background-color: $ag-header-background-1;
+      content: '';
+      display: inline-block;
+      height: 2px;
+      left: 5px;
+      position: absolute;
+      top: 7px;
+      width: 6px;
+  }
+
+  // class alters (skin): background, border-bottom, color, font-weight
+  // class alters (comp): box-sizing, left, overflow, position, top, width
+  // set on element: height (default 25px)
+  .ag-header {
+      background-color: $ag-header-background-1;
+      border-bottom: $xl-border-header;
+      color: $ag-header-foreground-1;
+      font-weight: $ag-header-font-weight;
+  }
+
+  .ag-header-icon {
+      color: $ag-header-foreground-1;
+      fill: $ag-header-foreground-1;
+      stroke: none;
+  }
+
+  .ag-no-scrolls .ag-header-container {
+      background: $ag-header-background-1;
+      border-bottom: $ag-border-1;
+  }
+
+  // class alters: box-sizing, display, float, height, overflow
+  // set on element (if non-existant): display, width
+  // .ag-pinned-left-header {}
+
+  // class alters: border-left
+  // .ag-ltr .ag-pinned-right-header {}
+
+  // class alters: box-sizing, display, float, height, overflow
+  // set on element (if non-existant): display, width
+  // .ag-pinned-right-header {}
+
+  // class alters: box-sizing, height, overflow
+  // set on element: margin-left, margin-right
+  // .ag-header-viewport {}
+
+  // class alters: box-sizing, height, position, white-space
+  // .ag-scrolls .ag-header-container {}
+
+  // class alters: position
+  // set on element: top, height, width
+  // .ag-scrolls .ag-header-row {}
+
+  // class alters: border
+  .ag-ltr .ag-header-cell {
+      background-color: $ag-header-background-1;
+      border-left: $xl-border-header-separator;
+
+      &:first-of-type {
+          border-left-width: 0;
+      }
+
+      &:last-of-type {
+          border-right: $xl-border-header-separator;
+      }
+  }
+
+  .ag-header-cell-resize {
+      background-color: $ag-header-background-1;
+      opacity: .1;
+      position: relative;
+  }
+
+  // class alters: background-color
+  .ag-header-cell-moving {
+      background-color: $xl-blue-80;
+
+      .ag-header-cell-label {
+          opacity: .5;
+      }
+  }
+
+  // class alters: box-sizing, display, height, position, text-align, vertical-align,
+  .ag-header-cell {
+      border-bottom: $xl-border-header; // needed for xl-list-grid
+      text-align: left;
+  }
+
+  .ag-rtl .ag-header-cell {
+      border-left: $xl-border-header-separator;
+  }
+
+  .ag-ltr .ag-header-group-cell {
+      border-right: $xl-border-header-separator;
+      padding-left: 10px;
+  }
+
+  .ag-rtl .ag-header-group-cell {
+      border-left: $xl-border-header-separator;
+  }
+
+  .ag-header-group-cell-with-group {
+      border-bottom: $xl-border-header-separator;
+  }
+
+  // class alters: padding, overflow, text-overflow
+  .ag-header-cell-label {
+      padding: 3px 10px 5px; // NOT supported - wireframe dictates padding-bottom: 8px
+      user-select: none;
+  }
+
+  // support custom icon insert for header filter
+  .ag-header-cell-label > i,
+  .sorted > i {
+      position: relative;
+  }
+
+  // class alters: box-sizing, display, height, position, text-align
+  .ag-header-cell-text {
+      font-size: $xl-header-font-size;
+      min-height: 30px;
+      text-align: left;
+  }
+
+  // custom grid header modification
+  .xl-col-header-container {
+      .btn-link {
+          background-color: $ag-header-background-1;
+          color: $ag-header-foreground-1;
+          font-size: $xl-header-font-size;
+          min-height: 30px;
+      }
+
+      .btn-link:hover,
+      .btn-link:focus,
+      .btn-link:active,
+      .btn-link:active:focus {
+          color: rgba($ag-header-foreground-1, .8);
+          outline: 0;
+          text-decoration: none;
+      }
+  }
+
+  .ag-header-group-cell-label {
+      padding: 4px;
+  }
+
+  .ag-ltr .ag-header-group-cell-label {
+      padding-left: 10px;
+  }
+
+  .ag-rtl .ag-header-group-cell-label {
+      padding-right: 10px;
+  }
+
+  .ag-rtl .ag-header-group-text {
+      margin-left: 2px;
+  }
+
+  .ag-ltr .ag-header-group-text {
+      margin-right: 2px;
+  }
+
+  .ag-header-cell-menu-button {
+      border: 1px solid transparent;
+      border-radius: 3px;
+      box-sizing: content-box; // When using bootstrap, box-sizing was set to 'border-box'
+      line-height: 0; // normal line height, a space was appearing below the menu button
+      margin-left: 1px;
+      margin-right: 1px;
+      margin-top: 4px;
+      padding: 2px;
+  }
+
+  // class alters: border-left
+  .ag-ltr .ag-pinned-right-header {
+      border-left: $xl-border-header-separator;
+  }
+
+  .ag-rtl .ag-pinned-left-header {
+      border-right: $xl-border-header-separator;
+  }
+
+  .ag-header-cell-menu-button:hover {
+      border: $ag-border-1;
+  }
+
+  //---- ag-grid BODY Styles ----
+  // class alters: background-color, box-sizing, height, position, width
+  // set on element: height, top (default: 25px)
+  .ag-body {
+      background-color: $ag-background-1;
+  }
+
+  // class alters: background-color
+  .ag-row-odd {
+      background-color: $ag-row-odd-background-color;
+
+      &.ag-row-selected {
+          background-color: rgba($ag-row-selected-background-color, $xl-row-selected-opacity);
+          color: $ag-foreground-1;
+      }
+  }
+
+  // class alters: background-color
+  .ag-row-even {
+      background-color: $ag-row-even-background-color;
+
+      &.ag-row-selected {
+          background-color: rgba($ag-row-selected-background-color, $xl-row-selected-opacity);
+          color: $ag-foreground-1;
+      }
+  }
+
+  // class alters: overflow
+  // .ag-ltr .ag-pinned-left-cols-viewport {}
+
+  // class alters: float
+  // set on element: display, height, width
+  // .ag-pinned-left-cols-viewport {}
+
+  // class alters: height
+  // set on element: margin-left, margin-right
+  // .ag-body-viewport-wrapper {}
+
+  // class alters: height, overflow-x, overflow-y
+  .ag-body-viewport,
+  .ag-pinned-right-cols-viewport {
+      // legacy code from mc
+      @include scrollbar();
+      border-left: 2px solid rgba($xl-cool-grey-4-40, .5);
+
+      // &::-webkit-scrollbar-track:horizontal {
+      //     border-top: 1px solid mix($xl-white, $xl-blue, 80%);
+      // }
+  }
+
+  // class alters: display, position
+  // set on element: height, top, width
+  .ag-scrolls .ag-body-container {
+      margin-right: 30px;
+  }
+
+  // class alters: position, white-space, width
+  // set on element: height (default: 25px - set with JS), top
+  .ag-row {
+      &:hover {
+          background-color: $xl-row-hover-color;
+      }
+  }
+
+  // may only be available through enterprise edition
+  .ag-row-group {
+      background-color: $ag-row-group-background-color;
+  }
+
+  .ag-floating-top {
+      .ag-row {
+          background-color: $ag-row-floating-background-color;
+      }
+  }
+
+  .ag-floating-bottom {
+      .ag-row {
+          background-color: $ag-row-floating-background-color;
+      }
+  }
+
+  //---- ag-grid OVERLAY Styles ----
+  .ag-overlay-loading-wrapper {
+      background-color: $xl-white;
+  }
+
+  .ag-overlay-loading-center {
+      background-color: $xl-white;
+      border: $ag-border-1;
+      border-radius: 10px;
+      color: $xl-black;
+      padding: 10px;
+  }
+
+  .ag-overlay-no-rows-center {
+      background-color: $xl-white;
+      border: $ag-border-1;
+      border-radius: 10px;
+      padding: 10px;
+  }
+
+  .ag-group-cell-entire-row {
+      background-color: $ag-background-1;
+      padding: $ag-cell-padding;
+  }
+
+  .ag-footer-cell-entire-row {
+      background-color: $ag-background-1;
+      padding: $ag-cell-padding;
+  }
+
+  //---- ag-grid GROUPING Styles ----
+  .ag-group-cell {
+      font-style: italic;
+  }
+
+  .ag-ltr .ag-group-expanded {
+      padding-right: 4px;
+  }
+
+  .ag-rtl .ag-group-expanded {
+      padding-left: 4px;
+  }
+
+  .ag-ltr .ag-group-contracted {
+      padding-right: 4px;
+  }
+
+  .ag-rtl .ag-group-contracted {
+      padding-left: 4px;
+  }
+
+  .ag-ltr .ag-group-loading {
+      padding-right: 4px;
+  }
+
+  .ag-rtl .ag-group-loading {
+      padding-left: 4px;
+  }
+
+  .ag-ltr .ag-group-value {
+      padding-right: 2px;
+  }
+
+  .ag-rtl .ag-group-value {
+      padding-left: 2px;
+  }
+
+  .ag-ltr .ag-group-checkbox {
+      padding-right: 2px;
+  }
+
+  .ag-rtl .ag-group-checkbox {
+      padding-left: 2px;
+  }
+
+  .ag-group-child-count {
+      display: inline-block;
+  }
+
+  .ag-footer-cell {
+      font-style: italic;
+  }
+
+  //---- ag-grid MENU (sorting) Styles ----
+  .ag-menu {
+      background-color: $ag-background-1;
+      border: $ag-border-color-2;
+      //color: $ag-foreground-1;
+      cursor: default;
+      font-family: $ag-root-font-family;
+      font-size: $ag-root-font-size;
+
+      .ag-tab-header {
+          background-color: $ag-tab-background;
+      }
+
+      .ag-tab {
+          border-left: 1px solid transparent;
+          border-right: 1px solid transparent;
+          border-top: 1px solid transparent;
+          border-top-left-radius: 2px;
+          border-top-right-radius: 2px;
+          color: $xl-cool-grey-4;
+          display: inline-block;
+          margin: 2px 2px 0;
+          padding: $ag-tab-padding;
+          // need to specify color and stroke again here because
+          // for blue, the tab header is different to the grid header
+      }
+
+      .ag-tab-selected {
+          background-color: $ag-tab-selected-background;
+          border-left: $ag-tab-border;
+          border-right: $ag-tab-border;
+          border-top: $ag-tab-border;
+          color: $xl-black;
+      }
+  }
+
+  .ag-menu-separator {
+      border-top: 1px solid $ag-separator-color;
+  }
+
+  // .ag-menu-option {}
+  .ag-menu-option-active {
+      background-color: $ag-menu-option-active-color;
+  }
+
+  .ag-menu-option-icon {
+      padding: $ag-menu-option-padding;
+      vertical-align: middle;
+  }
+
+  .ag-menu-option-text {
+      padding: $ag-menu-option-padding;
+      vertical-align: middle;
+  }
+
+  .ag-menu-option-shortcut {
+      padding: $ag-menu-option-shortcut-padding;
+      vertical-align: middle;
+  }
+
+  .ag-menu-option-popup-pointer {
+      padding: $ag-menu-option-padding;
+      vertical-align: middle;
+  }
+
+  .ag-menu-option-disabled {
+      opacity: .5;
+  }
+
+  .ag-menu-column-select-wrapper {
+      margin: 2px;
+  }
+
+  //---- ag-grid FILTER Styles ----
+  .ag-filter-checkbox {
+      left: 2px;
+      position: relative;
+      top: 2px;
+  }
+
+  .ag-filter-header-container {
+      border-bottom: 1px solid $ag-separator-color;
+  }
+
+  .ag-filter-apply-panel {
+      border-top: 1px solid $ag-separator-color;
+      padding: 2px;
+  }
+
+  .ag-filter-value {
+      margin-left: 4px;
+  }
+
+  .ag-ltr .ag-selection-checkbox {
+      padding-right: 4px;
+  }
+
+  .ag-rtl .ag-selection-checkbox {
+      padding-left: 4px;
+  }
+
+  //---- ag-grid PAGING Styles ----
+  .ag-paging-panel {
+      padding: 4px;
+  }
+
+  .ag-paging-button {
+      margin-left: 4px;
+      margin-right: 4px;
+  }
+
+  .ag-paging-row-summary-panel {
+      display: inline-block;
+      width: 300px;
+  }
+
+  //---- ag-grid TOOL Styles ----
+  .ag-tool-panel {
+      background-color: $ag-background-1;
+      border-bottom: $ag-border-1;
+      border-top: $ag-border-1;
+      color: $ag-foreground-1;
+
+      .ag-column-select-panel {
+          border-bottom: $ag-border-1;
+      }
+  }
+
+  .ltr .ag-tool-panel {
+      border-right: $ag-border-1;
+  }
+
+  .rtl .ag-tool-panel {
+      border-left: $ag-border-1;
+  }
+
+  //---- ag-grid STATUS BAR Styles ----
+  .ag-status-bar {
+      background-color: $ag-background-1;
+      border-bottom: $ag-border-1;
+      border-left: $ag-border-1;
+      border-right: $ag-border-1;
+      color: $ag-foreground-1;
+      font-size: $ag-root-font-size;
+      height: 22px;
+      padding: 2px;
+  }
+
+  .ag-status-bar-aggregations {
+      float: right;
+  }
+
+  .ag-status-bar-item {
+      padding-left: 10px;
+  }
+
+  //---- ag-grid COLUMN DROP Styles ----
+  .ag-column-drop-cell {
+      background: $ag-button-background-1;
+      border: $ag-button-border-1;
+      color: $ag-button-foreground-1;
+  }
+
+  .ag-column-drop-cell-ghost {
+      opacity: .5;
+  }
+
+  .ag-column-drop-cell-text {
+      padding-left: 2px;
+      padding-right: 2px;
+  }
+
+  .ag-column-drop-cell-button {
+      border: 1px solid transparent;
+      border-radius: 3px;
+      padding-left: 2px;
+      padding-right: 2px;
+  }
+
+  .ag-column-drop-cell-button:hover {
+      border: $ag-border-1;
+  }
+
+  .ag-column-drop-empty-message {
+      color: $xl-cool-grey-2;
+      padding-left: 2px;
+      padding-right: 2px;
+  }
+
+  .ag-column-drop-icon {
+      margin: 3px;
+  }
+
+  .ag-column-drop {
+      background-color: $ag-background-1;
+  }
+
+  // this is for the rowGroupPanel, that appears along the top of the grid
+  .ag-column-drop-horizontal {
+      border-left: $ag-border-1;
+      border-right: $ag-border-1;
+      border-top: $ag-border-1;
+      padding: 2px;
+  }
+
+  // .ag-column-drop-cell {
+  //     padding: 2px:
+  // }
+
+  // this is for the column drops that appear in the toolPanel
+  .ag-column-drop-vertical {
+      border-bottom: $ag-border-1;
+      padding: 4px 4px 10px;
+
+      .ag-column-drop-cell {
+          margin-top: 2px;
+      }
+
+      .ag-column-drop-empty-message {
+          padding: 5px;
+          text-align: center;
+      }
+  }
+
+  .ag-pivot-mode {
+      background-color: $ag-background-1;
+      border-bottom: $ag-border-1;
+      padding: 4px;
+  }
+
+  .ag-select-agg-func-popup {
+      background-color: $ag-select-background;
+      border: $ag-border-1;
+      cursor: default;
+      font-size: 14px;
+      position: absolute;
+  }
+
+  .ag-select-agg-func-item {
+      padding-left: 2px;
+      padding-right: 2px;
+  }
+
+  .ag-select-agg-func-item:hover {
+      background-color: $ag-menu-option-active-color;
+  }
+}

@@ -1,0 +1,118 @@
+<div class="container jumbotron">
+    <div class="order-page">
+        <h2>{{orderLanguage.orderDetails}}</h2>
+        <hr />
+        <br />
+        <form [formGroup]="form">
+            <div class="form-group">
+                <label for="from">{{orderLanguage.fullPrice}} :</label>
+                <input id="sum" class="form-control my-input-field-disabled" name="from" placeholder="{{sum | number}} {{user.currency}}"
+                    disabled />
+            </div>
+
+            <div class="form-group">
+                <label for="name">Megrendelő :</label>
+                <input id="name" formControlName="name" class="form-control my-input-field-disabled" name="name" 
+                    disabled /> 
+            </div>
+
+            <div class="form-group">
+                <label for="contact" >
+                    Kapcsolattartó neve :
+                </label>
+                <input id="contact" formControlName="contact" class="form-control" name="contact"  />
+               <small *ngIf="form.get('contact').invalid && form.get('contact').touched"
+                class="text-danger">
+                A kapcsolat tartó megadása kötelező!
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="email" >
+                    E-mail címe :
+                </label>
+                <input id="email" formControlName="email" class="form-control" name="email"  />
+                <small *ngIf="form.get('email').invalid && form.get('email').touched"
+                class="text-danger">
+                A kapcsolat tartó e-mail címe kötelező!
+                </small>
+            </div>
+
+
+            <div class="form-group">
+                <label for="address" >
+                cím :
+                </label>
+
+                <select class="form-control" name="address" formControlName="address">
+                  <option *ngFor="let crd1 of crd1s" [value]="crd1.shipToCode">{{crd1.zipCode + ", " + crd1.city + ", " + crd1.street}} </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comment" >
+                Megjegyzés :
+                </label>
+                <textarea id="comment" name="comment" formControlName="comment" class="form-control" rows="4" cols="50" placeholder="Megjegyzés...">
+                    
+                </textarea>
+            </div>
+
+           <!--  <div class="form-group">
+                <label for="to" [ngClass]="{'text-danger': (form.get('target').invalid && form.get('target').touched)}">
+                    Megrendelő:
+                </label>
+                <select id="to" class="form-control"
+                    [ngClass]="{'text-danger': (form.get('target').invalid && form.get('target').touched)}"
+                    name="target" formControlName="target">
+
+                    <option value=null selected disabled>-- Válasszon a rendelések közül --</option>
+                    <option *ngFor="let test of testArray" value="{{test}}">{{test}}</option>
+                </select>
+                <small *ngIf="form.get('target').invalid && form.get('target').touched" class="text-danger">
+                    Ez a mező nem maradhat üresen
+                </small>
+            </div> -->
+
+            <br />
+            <br />
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" class="form-control"
+                        formControlName="time" id="time" name="time" placeholder="{{orderLanguage.deliveryDate}}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <br />
+
+            <button type="button" class="btn btn-primary center-block" data-toggle="modal" data-target="#exampleModal"
+                [disabled]="form.invalid" (click)="acceptOrder()">{{orderLanguage.finalize}}</button>
+
+                <button type="button" class="btn btn-primary center-block" data-toggle="modal" 
+                (click)="teszt()">teszt</button>
+
+        </form>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{orderLanguage.orderComplet}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="navigate()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{orderLanguage.thanks}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="navigate()">{{orderLanguage.close}}
+                    </button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

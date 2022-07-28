@@ -1,0 +1,22 @@
+<app-loader></app-loader>
+<div class="container">
+    <div id="rmhn">
+        <ag-grid-angular #agGrid2 style="width: 1000px; height: 350px;" class="ag-theme-material" id="rmhn"
+            (gridReady)="onGridReady($event,'rmhn')"
+            [rowData]="rmhns "
+            [columnDefs]="columnDefsMaster" 
+            [getRowNodeId]="getRowNodeId" 
+            rowSelection="single">
+        </ag-grid-angular>
+    </div>
+    <div id="rmhv">
+    <ag-grid-angular #agGrid style="width: 1000px; height: 650px;" class="ag-theme-material" id="rmhv"
+        (gridReady)="onGridReady($event,'rmhv')"
+        [rowData]="rmhvs "
+        [columnDefs]="columnDefs" 
+        [getRowNodeId]="getRowNodeId" 
+        rowSelection="single">
+    </ag-grid-angular>
+    </div>
+
+</div>

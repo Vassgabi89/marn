@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <form #editForm="ngForm" (ngSubmit)="onSubmit()">
+                <div class="form-group"><label for="">Name</label>
+                    <input #productName="ngModel" name="name" [(ngModel)]="product.name" type="text" class="form-control" required>
+                    <div                        
+                        [hidden]="isValid(productName)" 
+                        class="alert alert-danger">
+                        A mező kitöltése kötelező
+                    </div>
+                </div>
+                <div class="form-group"><label for="">Manufacturer</label>
+                    <input name="manufacturer" [(ngModel)]="product.manufacturer" type="text" class="form-control" required> 
+                </div>
+                <div class="form-group"><label for="">Price</label>
+                    <input #productPrice="ngModel" name="price" [(ngModel)]="product.price" type="number" class="form-control" required>
+                    <div 
+                        [hidden]="productPrice.valid || productPrice.pristine"
+                        class="alert alert-danger">
+                        A mező kitöltése kötelező
+                    </div>
+                </div>
+                <div class="form-group"><label for="">Description</label>
+                    <input name="description" [(ngModel)]="product.description" type="text" class="form-control"></div>
+
+                    <button 
+                    [disabled]="!editForm.form.valid"                    
+                    [class.btn-primary]="editForm.form.valid"
+                    [class.btn-secondary]="editForm.form.invalid"
+                    type="submit" class="btn mr-2"                    
+                    >Aktualizál</button>
+                    <button routerLink = "/products" class="btn btn-secondary mr-2">Mégse</button>
+                    <button (click)="nextClick()" type="button" class="btn btn-secondary">Next</button>
+            </form>
+        </div>
+    </div>
+
+    <ag-grid-angular 
+#agGrid
+  style="width: 1000px; height: 500px;" 
+  class="ag-theme-fresh mt-4" 
+  [rowData]="list$ | async "
+  [columnDefs]="columnDefs"
+  rowSelection="multiple">
+</ag-grid-angular>
+
+</div>
+

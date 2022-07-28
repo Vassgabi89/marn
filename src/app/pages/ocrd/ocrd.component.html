@@ -1,0 +1,13 @@
+<div class="container">    
+
+<ag-grid-angular 
+#agGrid
+  style="width: 1000px; height: 500px;" 
+  class="ag-theme-material mt-4" 
+  [rowData]="list$ | async "
+  [columnDefs]="columnDefs"
+  rowSelection="multiple">
+</ag-grid-angular>
+
+</div>
+

@@ -1,0 +1,58 @@
+  <app-loader></app-loader>
+<div class="container">
+    <form #editForm="ngForm" (ngSubmit)="onSubmit()">
+        <div id="ordr">
+            <div class="row">
+                <div class="form-group col-sm">
+                    <label for="">Partner kód</label>
+                    <input tabindex="1" 
+                        #CardCode="ngModel" name="cardcode" label = "Partner kód" readOnly="true"
+                        [(ngModel)]="ordr.cardcode" [itemvalidator]="validateCell('cardcode')" type="text"
+                        class="form-control">
+                </div>
+                <div class="form-group col-sm">
+                    <label for="">Partner neve</label>
+                    <input 
+                        #CardCode="ngModel" name="cardname"
+                        [(ngModel)]="ordr.cardname" type="text" class="form-control">
+                </div>
+                <div class="form-group col-sm">
+                    <label for="">Rendelés szám</label>
+                    <input #ManualNum="ngModel" name="manualnum"
+                        [(ngModel)]="ordr.manualnum" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm">
+                    <label for="">Dátum</label>
+                    <input 
+                        #DardDode="ngModel" name="docdate"
+                        [(ngModel)]="ordr.docdate" type="text" size="10" class="form-control" >
+                </div>
+                <div class="form-group col-sm">
+                    <label for="">Szállítási dátum</label>
+                    <input 
+                        #DocDueDate="ngModel" name="docduedate"
+                        [(ngModel)]="ordr.docduedate" type="text" class="form-control">
+                        <!--useValueAsDate-->
+                </div> 
+                <div class="form-group col-sm">
+                    <label for="">Rendelés összesen</label>
+                    <input #DocTotal="ngModel" name="doctotal"
+                        [(ngModel)]="ordr.doctotal" type="number" class="form-control">
+                </div>
+            </div>
+        </div>
+        <button (click)="keresMod()" class="btn btn-secondary mr-2" type="button">Kereső mód</button>
+    </form>
+    <div id="rdr1">
+    <ag-grid-angular #agGrid style="width: 1100px; height: 650px;" class="ag-theme-material" id="rdr1"
+        (gridReady)="onGridReady($event,'rdr1')"
+        [rowData]="rdr1s "
+        [columnDefs]="columnDefs" 
+        [getRowNodeId]="getRowNodeId" 
+        rowSelection="single">
+    </ag-grid-angular>
+    </div>
+
+</div>
